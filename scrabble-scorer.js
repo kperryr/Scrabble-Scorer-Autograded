@@ -35,26 +35,68 @@ function oldScrabbleScorer(word) {
 function initialPrompt() {
    console.log("Let's play some scrabble! Enter a word:");
    let userWord = input.question("Enter a word to score:");
+   while(!(/^[a-zA-Z]+$/.test(userWord))){
+      userWord = input.question("Error: Invalid characters. Please enter a word to score:");
+   }
    return userWord;
 }
 
 let newPointStructure;
 
-let simpleScorer;
+let simpleScorer = function(word){
+   return word.length;
+};
 
-let vowelBonusScorer;
+let vowelBonusScorer = function(word){
+   let vowels = ['A', 'E', 'I', 'O', 'U'];
+   let score = 0;
+   for (let i in word){
+      if (vowels.includes(word[i].toUpperCase())){
+         score += 3;
+      }else{
+         score += 1;
+      }
+   }
+   return score;
+};
 
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = [
+   {"name":"Simple Score",
+    "description":"Each letter is worth 1 point.",
+    "scroerFunction":simpleScorer}, 
 
-function scorerPrompt() {}
+   {"name":"Bonus Vowels",
+    "description":"Vowels are 3 pts, consonants are 1 pt.",
+    "scroerFunction":vowelBonusScorer},
+
+   {"name":"Scrabble",
+    "description":"The traditional scoring algorithm.",
+    "scroerFunction":oldScrabbleScorer}
+];
+
+function scorerPrompt(userWord) {
+   let numArr = [0,1,2];
+   console.log("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system");
+
+   let algoNum = input.question("Enter 0, 1, or 2:");
+   algoNum = Number(algoNum);
+   while (!(numArr.includes(algoNum))){
+      algoNum = input.question("Error: Invalid Number. Enter 0, 1, or 2:");
+      algoNum = Number(algoNum);
+   }
+
+   console.log(`Score for '${userWord}': ${scoringAlgorithms[algoNum].scroerFunction(userWord)}`);
+   
+   return scoringAlgorithms[algoNum];
+}
 
 function transform() {};
 
 function runProgram() {
    let word_to_score = initialPrompt();
-   console.log(oldScrabbleScorer(word_to_score));
+   scorerPrompt(word_to_score);
    
 }
 
