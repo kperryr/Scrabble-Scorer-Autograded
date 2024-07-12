@@ -30,13 +30,15 @@ function oldScrabbleScorer(word) {
 	return letterPoints;
  }
 
- 
+
 
 //----------------------------------------------------------------------------------------------------------
 function initialPrompt() {
    console.log("Let's play some scrabble!\n");
    let userWord = input.question("Enter a word to score: ");
 
+  // while (!(/^[a-zA-Z\s]+$/.test(userWord))) { //checks if all are letters or spaces ie no numbers or symbols
+  
    while (!(/^[a-zA-Z]+$/.test(userWord))) { //checks if all are letters ie no spaces or numbers or symbols
 
       userWord = input.question("Error: Invalid characters. Please enter a word to score: ");
@@ -69,9 +71,11 @@ let vowelBonusScorer = function(word){
 
       if (vowels.includes(word[i].toUpperCase())){
          score += 3;
-      }else{
-         score += 1;
-      }
+      } else {
+         //if (!(word[i] === " ")){
+            score += 1;
+         }
+     // }
 
    }
 
@@ -154,6 +158,7 @@ function transform(obj) {
 
       }
    }
+   //newObj[" "] = 0;
 
    return newObj;
 };
