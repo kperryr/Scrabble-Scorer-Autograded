@@ -38,7 +38,7 @@ function initialPrompt() {
    let userWord = input.question("Enter a word to score: ");
 
   // while (!(/^[a-zA-Z\s]+$/.test(userWord))) { //checks if all are letters or spaces ie no numbers or symbols
-  
+
    while (!(/^[a-zA-Z]+$/.test(userWord))) { //checks if all are letters ie no spaces or numbers or symbols
 
       userWord = input.question("Error: Invalid characters. Please enter a word to score: ");
@@ -69,7 +69,7 @@ let vowelBonusScorer = function(word){
 
    for (let i in word){
 
-      if (vowels.includes(word[i].toUpperCase())){
+      if (vowels.includes(word[i].toUpperCase())) {
          score += 3;
       } else {
          //if (!(word[i] === " ")){
@@ -88,7 +88,7 @@ let vowelBonusScorer = function(word){
 let scrabbleScorer = function(word){
    let score = 0;
 
-   for (let i in word){
+   for (let i in word) {
 
       score += newPointStructure[word[i]];
    }
@@ -151,7 +151,7 @@ function transform(obj) {
 
       arr = obj[key];
       
-      for(let i in arr){
+      for (let i in arr) {
 
          let lowerCaseKey = arr[i].toLowerCase();
          newObj[lowerCaseKey] = Number(key);
